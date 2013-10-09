@@ -16,13 +16,26 @@ struct trans *tx_sa)
 {
     char rut[9];
     char clave[21];
+    char precio[6];
+    char codigo[11];
 
     memset(rut, 0 , sizeof rut);
     memset(clave, 0 , sizeof clave);
+    memset(precio, 0, sizeof precio);
+    memset(codigo, 0 , sizeof codigo);
 
-    sscanf(tx_in->datos,"%8c%8c", rut, clave);
 
- //   tx_out->len = sprintf(tx_out->datos,"%s%s", rut, clave);
+    sscanf(tx_in->datos,"%9c%21c%6c%11c", rut, clave, precio, codigo);
+
+    printf( "Llego desde el formulario: %s\n", tx_in->datos);
+
+printf("Rut:  %s\n", rut);
+printf("Clave:  %s\n", clave);
+printf("Precio:  %s\n", precio);
+printf("Codigo:  %s\n", codigo);
+
+//    tx_out->len = sprintf(tx_out->datos,"%s%s%s%s%s%s", nombre, genero,
+  //  pais, anio, stock, precio);
 
 
 // Comunicacion con el Demonio 
@@ -45,7 +58,7 @@ struct trans *tx_sa)
 
   // guardamos en la estructura mensaje lo que se quiere enviar 
         //al demonio
-        sprintf(mensaje.texto.dat, "%6s%s%s", "loginn" , rut, clave);
+        sprintf(mensaje.texto.dat, "%6s%s%s%s%s", "compel" , rut, clave, codigo, precio );
 
         mensaje.mtype = 1;
         mensaje.texto.pid = pid;
