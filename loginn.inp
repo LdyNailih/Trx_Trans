@@ -1,0 +1,26 @@
+ID loginn 900108 36 28
+fs 22 70
+#opc debug
+# ct inv
+box 00 00  24 80
+
+#Ahora recien creo el formulario
+
+cf  03  34  21 Iniciar Sesion
+cf  04  34  21 ++++++++++++++
+
+cf 07 05 04 Rut:
+ce 07 14 08 000 AN 0
+
+cf 08 05 07 Clave:
+ce 08 14 20 08 AN 0
+
+cm  10  15  02 0
+
+tm 01 27 Usuario/Clave no coinciden
+tm 02 05 Exito
+tm 03 05 ERROR
+
+ff
+
+
