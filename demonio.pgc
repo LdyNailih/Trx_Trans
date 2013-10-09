@@ -562,11 +562,11 @@ sprintf(respuesta.texto.datos, "%s", "02");
 								sprintf(SQL_clave.arr,"%s", clave);
 								SQL_clave.len=strlen(SQL_clave.arr);
 								
-								 printf("El rut es: %s\n", SQL_rut.arr);
+								printf("El rut es: %s\n", SQL_rut.arr);
                                 printf("El nombre es: %s\n", SQL_nombre_usuario.arr);
                                 printf("El apellido es: %s\n", SQL_apellido.arr);
 								printf("El mail es: %s\n", SQL_mail.arr);
-								printf("El mail es: %s\n", SQL_clave.arr);
+								printf("El clave es: %s\n", SQL_clave.arr);
 
 
                                 // Verificamos si el usuario ya esta registrado
@@ -576,9 +576,12 @@ sprintf(respuesta.texto.datos, "%s", "02");
 
                                         EXEC SQL UPDATE usuario SET nombre=SQL_nombre_usuario, apellido=SQL_apellido,mail= SQL_mail, clave=SQL_clave    WHERE rut = :SQL_rut;
                                         EXEC SQL COMMIT;
-
-                                        // Revisar en caso de error en la consulta
+										
+										printf(" \n   Estoy setiando aqui \n");
+                                        
+										// Revisar en caso de error en la consulta
                                         if(sqlca.sqlcode != 0) {
+										
 
                                                 printf("\nERROR en la Actualizacion SQL\n\n");
 
