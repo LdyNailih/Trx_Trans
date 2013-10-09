@@ -564,10 +564,10 @@ sprintf(respuesta.texto.datos, "%s", "02");
 								SQL_clave.len=strlen(SQL_clave.arr);
 								
 								 printf("El rut es: %s\n", SQL_rut.arr);
-                                printf("El nombre es: %s\n", SQL_nombre.arr);
-                                printf("El apellido es: %d\n", SQL_apellido.arr);
-								printf("El mail es: %d\n", SQL_mail.arr)
-								printf("El mail es: %d\n", SQL_clave.arr)
+                                printf("El nombre es: %s\n", SQL_nombre_usuario.arr);
+                                printf("El apellido es: %s\n", SQL_apellido.arr);
+								printf("El mail es: %s\n", SQL_mail.arr);
+								printf("El mail es: %s\n", SQL_clave.arr);
 
 
                                 // Verificamos si el usuario ya esta registrado
@@ -616,7 +616,7 @@ sprintf(respuesta.texto.datos, "%s", "02");
                         }//Fin Formulario modusu
 			
 			
->>>>>>> Actualizacion demonio y mod usu.
+
 			} // estos parentesis no se mueven al agregar  formulario (  U CANT TOUCH THIS (8)! )
 }
 
