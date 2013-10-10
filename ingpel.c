@@ -20,6 +20,7 @@ struct trans *tx_sa)
     char anio[5];
     char stock[21];
     char precio[6];
+    char codigo[11];
 
     memset(nombre, 0 , sizeof nombre);
     memset(genero, 0 , sizeof genero);
@@ -27,9 +28,10 @@ struct trans *tx_sa)
     memset(anio, 0 , sizeof anio);
     memset(stock, 0, sizeof stock);
     memset(precio, 0, sizeof precio);
+    memset(codigo, 0, sizeof codigo);
 
-    sscanf(tx_in->datos,"%20c%20c%20c%4c%20c%5c", nombre, genero, 
-    pais, anio, stock, precio);
+    sscanf(tx_in->datos,"%20c%20c%20c%4c%20c%5c%10c", nombre, genero, 
+    pais, anio, stock, precio,codigo);
 
     printf( "Llego desde el formulario: %s\n", tx_in->datos);
 
@@ -37,7 +39,9 @@ printf("Nombre:  %s\n", nombre);
 printf("Genero:  %s\n", genero);
 printf("Pais:  %s\n", pais);
 printf("Anio:  %s\n", anio);
-printf("Stock:  %s\n", stock); //ACAAAAA!!!! 
+printf("Stock:  %s\n", stock);
+printf("Precio: %s\n", precio);
+printf("Codigo:%s\n", codigo); //ACAAAAA!!!! 
 
 
 //    tx_out->len = sprintf(tx_out->datos,"%s%s%s%s%s%s", nombre, genero,
@@ -66,7 +70,7 @@ printf("Stock:  %s\n", stock); //ACAAAAA!!!!
         //al demonio
         sprintf(mensaje.texto.dat, "%6s%s%s%s%s%s%s", "ingpel" , 
 nombre,
-        genero, pais, anio, stock, precio);
+        genero, pais, anio, stock, precio,codigo);
 
         mensaje.mtype = 1;
         mensaje.texto.pid = pid;

@@ -31,7 +31,7 @@ printf("Rut:  %s\n", rut);
 printf("Clave:  %s\n", clave);
 printf("Codigo:  %s\n", codigo);
 
-tx_out->len = sprintf(tx_out->datos,"%s%s%s",rut,clave,codigo);
+//tx_out->len = sprintf(tx_out->datos,"%s%s%s",rut,clave,codigo);
 
 
 // Comunicacion con el Demonio 

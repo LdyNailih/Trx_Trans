@@ -181,7 +181,7 @@ int main() {
                 {
                     printf("La pelicula ya existe\n");
                     
-                    EXEC SQL_SELECT nombre FROM pelicula WHERE nombre=:SQL_nombre;
+                    EXEC SQL SELECT nombre INTO :SQL_nombre FROM pelicula WHERE nombre=:SQL_nombre;
 
                     printf("Y sus datos son: Nombre Pelicula:%s,Genero:%s,Pais:%s,Anio:%s,Stock:%s,Precio:%s, Codigo:%s\n\n",SQL_nombre.arr,SQL_genero.arr,SQL_pais.arr,SQL_anio.arr,SQL_stock.arr,SQL_precio.arr, SQL_codigo.arr);
 
@@ -195,11 +195,12 @@ int main() {
 
 
                // Insertamos la película en la base de datos
-                    EXEC SQL INSERT INTO PELICULA (nombre, genero, pais, anio, stock, precio, codigo) 
-VALUES (:SQL_nombre,:SQL_genero,:SQL_pais,:SQL_anio,:SQL_stock,:SQL_precio,:SQL_codigo);
+                    
+                    EXEC SQL INSERT INTO PELICULA (nombre, genero, pais, anio, stock, precio, codigo) VALUES (:SQL_nombre,:SQL_genero,:SQL_pais,:SQL_anio,:SQL_stock,:SQL_precio,:SQL_codigo);
                     EXEC SQL COMMIT;
 
                 // Revisar en caso de error en la consulta
+                
                     if(sqlca.sqlcode != 0) {
                      printf("\nERROR en la consulta SQL\n\n");
                      memset(&respuesta,0,sizeof respuesta);
