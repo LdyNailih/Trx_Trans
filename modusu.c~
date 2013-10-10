@@ -49,7 +49,7 @@ int qid,pid;
         memset(&mensaje, 0, sizeof mensaje);
 
         // guardamos en la estructura mensaje lo que se quiere enviar al demonio
-        sprintf(mensaje.texto.dat, "%6s%s%s%s%s%s", "modusu", rut,nombre, apellido, mail , clave );
+        sprintf(mensaje.texto.dat, "%6s%s", "modusu", rut,nombre, apellido, mail , clave );
 
         mensaje.mtype = 1;
         mensaje.texto.pid = pid;
