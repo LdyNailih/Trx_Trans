@@ -17,19 +17,22 @@ struct trans *tx_sa)
     char rut[9];
     char clave[21];
     char codigo[11];
+    int comprar[4];
 
     memset(rut, 0 , sizeof rut);
     memset(clave, 0 , sizeof clave);
     memset(codigo, 0 , sizeof codigo);
+    memset(comprar, 0 , sizeof comprar);
 
-
-    sscanf(tx_in->datos,"%8c%20c%10c", rut, clave, codigo);
+    sscanf(tx_in->datos,"%8c%20c%10c%3i", rut, clave, codigo,comprar);
 
     printf( "Llego desde el formulario: %s\n", tx_in->datos);
 
 printf("Rut:  %s\n", rut);
 printf("Clave:  %s\n", clave);
 printf("Codigo:  %s\n", codigo);
+printf("Comprar:  %i\n", comprar);
+
 
 //tx_out->len = sprintf(tx_out->datos,"%s%s%s",rut,clave,codigo);
 
@@ -54,7 +57,7 @@ printf("Codigo:  %s\n", codigo);
 
   // guardamos en la estructura mensaje lo que se quiere enviar 
         //al demonio
-        sprintf(mensaje.texto.dat, "%6s%s%s%s", "compel" , rut, clave, codigo);
+        sprintf(mensaje.texto.dat, "%6s%s%s%s%i", "compel" , rut, clave, codigo, comprar);
 
         mensaje.mtype = 1;
         mensaje.texto.pid = pid;

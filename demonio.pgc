@@ -34,6 +34,7 @@ EXEC SQL BEGIN DECLARE SECTION;
    VARCHAR SQL_stock[21];
    VARCHAR SQL_precio[6];
    VARCHAR SQL_codigo[10];
+   INTEGER SQL_comprar[4];
    
    
       int SQL_count;
@@ -200,7 +201,7 @@ int main() {
                     EXEC SQL COMMIT;
 
                 // Revisar en caso de error en la consulta
-                
+
                     if(sqlca.sqlcode != 0) {
                      printf("\nERROR en la consulta SQL\n\n");
                      memset(&respuesta,0,sizeof respuesta);
@@ -284,14 +285,16 @@ int main() {
             char rut[9];
             char clave[21];
             char codigo[11];
+            int comprar[4];
 
         // Limpiamos los strings
             memset(rut, 0 , sizeof rut);
             memset(clave, 0 , sizeof clave);
             memset(codigo, 0 , sizeof codigo);
+            memset(comprar, 0 , sizeof comprar);
 
         //Recibimos los datos desde el .c
-                sscanf(mensaje.texto.datos, "%6c%8c%20c%20c",formulario, rut,clave,codigo); // agregar formulario 
+                sscanf(mensaje.texto.datos, "%6c%8c%20c%10c%3i",formulario, rut,clave,codigo,comprar); // agregar formulario 
 
             //Guardamos la variable en la estructura
                 sprintf(SQL_rut.arr,"%s", rut);
@@ -300,9 +303,11 @@ int main() {
                 SQL_clave.len=strlen(SQL_clave.arr);
                 sprintf(SQL_codigo.arr,"%s", codigo);
                 SQL_codigo.len=strlen(SQL_codigo.arr);
+                sprintf(SQL_comprar.arr,"%s", comprar);
+                SQL_comprar.len=strlen(SQL_comprar.arr);
 
              //Verificamos si el usuario ya existe
-                EXEC SQL SELECT COUNT(*) INTO :SQL_count FROM usuario WHERE rut =:SQL_rut;
+                EXEC SQL SELECT precio INTO :SQL_precio FROM pelicula WHERE codigo=:SQL_codigo;
 
                 if(SQL_count != 0)
                 {

@@ -68,7 +68,7 @@ printf("Codigo:%s\n", codigo); //ACAAAAA!!!!
 
   // guardamos en la estructura mensaje lo que se quiere enviar 
         //al demonio
-        sprintf(mensaje.texto.dat, "%6s%s%s%s%s%s%s", "ingpel" , 
+        sprintf(mensaje.texto.dat, "%6s%s%s%s%s%s%s%s", "ingpel" , 
 nombre,
         genero, pais, anio, stock, precio,codigo);
 
