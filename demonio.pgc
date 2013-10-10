@@ -128,6 +128,7 @@ int main() {
                 char anio[5];
                 char stock[21];
                 char precio[6];
+                char codigo[11];
                 
             //Limpiamos los Strings
                 memset(nombre, 0 , sizeof nombre);
@@ -136,10 +137,11 @@ int main() {
                 memset(anio, 0 , sizeof anio);
                 memset(stock, 0, sizeof stock);
                 memset(precio, 0, sizeof precio);
+                memset(codigo, 0, sizeof codigo);
 
             //Recibimos los datos desde el .c
-                sscanf(mensaje.texto.datos, "%6c%20c%20c%20c%4c%20c%5c", formulario, nombre,
-                genero, pais, anio, stock, precio);
+                sscanf(mensaje.texto.datos, "%6c%20c%20c%20c%4c%20c%5c%10c", formulario, nombre,
+                genero, pais, anio, stock, precio,codigo);
 
             //Guardamos la variable en la estructura 
                 sprintf(SQL_nombre.arr,"%s", nombre);
@@ -159,6 +161,9 @@ int main() {
 
                 sprintf(SQL_precio.arr,"%s", precio);
                 SQL_precio.len=strlen(SQL_precio.arr);
+
+                sprintf(SQL_codigo.arr,"%s", codigo);
+                SQL_codigo.len=strlen(SQL_codigo.arr);
                 
                 printf("La pelicula es: %s\n", SQL_nombre.arr);
                 printf("Genero: %s\n", SQL_genero.arr);
@@ -166,6 +171,7 @@ int main() {
                 printf("Anio: %s\n", SQL_anio.arr);
                 printf("Stock: %s\n", SQL_stock.arr);
                 printf("Precio: %s\n", SQL_precio.arr);
+                printf("Codigo: %s\n", SQL_codigo.arr);
          
              //Verificamos si la  pelicula ya existe
                 EXEC SQL SELECT COUNT(*) INTO :SQL_count FROM PELICULA WHERE 
@@ -174,18 +180,10 @@ int main() {
                 if( SQL_count != 0)
                 {
                     printf("La pelicula ya existe\n");
-                    EXEC SQL SELECT nombre INTO :SQL_nombre FROM pelicula WHERE                     genero=:SQL_genero;
-                    EXEC SQL SELECT nombre INTO :SQL_nombre FROM pelicula WHERE
-                    pais=:SQL_pais;
-                    EXEC SQL SELECT nombre INTO :SQL_nombre FROM pelicula WHERE
-                    anio=:SQL_anio;
-                    EXEC SQL SELECT nombre INTO :SQL_nombre FROM pelicula WHERE
-                    stock=:SQL_stock;
-                    EXEC SQL SELECT nombre INTO :SQL_nombre FROM pelicula WHERE
-                    precio=:SQL_precio;
-                    EXEC SQL COMMIT;
+                    
+                    EXEC SQL_SELECT nombre FROM pelicula WHERE nombre=:SQL_nombre;
 
-                    printf("Y sus datos son: Nombre Pelicula:%s,Genero:%s,Pais:%s,Anio:%s,Stock:%s,Precio:%s\n\n",SQL_nombre.arr,SQL_genero.arr,SQL_pais.arr,SQL_anio.arr,SQL_stock.arr,SQL_precio.arr);
+                    printf("Y sus datos son: Nombre Pelicula:%s,Genero:%s,Pais:%s,Anio:%s,Stock:%s,Precio:%s, Codigo:%s\n\n",SQL_nombre.arr,SQL_genero.arr,SQL_pais.arr,SQL_anio.arr,SQL_stock.arr,SQL_precio.arr, SQL_codigo.arr);
 
                     memset( &respuesta, 0, sizeof respuesta);
                     sprintf(respuesta.texto.datos, "%s", "02");
@@ -197,8 +195,8 @@ int main() {
 
 
                // Insertamos la película en la base de datos
-                    EXEC SQL INSERT INTO PELICULA (nombre, genero, pais,anio, stock, precio) 
-VALUES (:SQL_nombre,:SQL_genero,:SQL_pais,:SQL_anio,:SQL_stock,:SQL_precio);
+                    EXEC SQL INSERT INTO PELICULA (nombre, genero, pais, anio, stock, precio, codigo) 
+VALUES (:SQL_nombre,:SQL_genero,:SQL_pais,:SQL_anio,:SQL_stock,:SQL_precio,:SQL_codigo);
                     EXEC SQL COMMIT;
 
                 // Revisar en caso de error en la consulta
@@ -275,6 +273,7 @@ VALUES (:SQL_nombre,:SQL_genero,:SQL_pais,:SQL_anio,:SQL_stock,:SQL_precio);
         msgsnd(qid,&respuesta,strlen(respuesta.texto.datos)+4,0);
                     }
                 }
+            }
 /*************************************************************************
                                 COMPRAR PELICULA
 *************************************************************************/
@@ -314,7 +313,7 @@ VALUES (:SQL_nombre,:SQL_genero,:SQL_pais,:SQL_anio,:SQL_stock,:SQL_precio);
             //Mandamos info al c
                     memset( &respuesta, 0, sizeof respuesta);
                     sprintf(respuesta.texto.datos, "%6s", SQL_precio.arr);
-                    repuesta.mtype = pid_destino;
+                    respuesta.mtype = pid_destino;
                     respuesta.texto.pid = pid;
                     msgsnd(qid, &respuesta, strlen(respuesta.texto.datos)+4,0);
                 }
@@ -327,8 +326,7 @@ VALUES (:SQL_nombre,:SQL_genero,:SQL_pais,:SQL_anio,:SQL_stock,:SQL_precio);
                     respuesta.texto.pid=pid;
                     msgsnd(qid,&respuesta,strlen(respuesta.texto.datos)+4,0);
                 }
-
-
+        }
 			
 			/*************************************************************************
                         Registrar Personas
